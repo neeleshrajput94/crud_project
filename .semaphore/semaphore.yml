@@ -11,3 +11,8 @@ blocks:
         - name: Build
           commands:
             - checkout
+  - name: Test
+    task:
+      jobs:
+        - name: 'Job #1'
+          commands: []
