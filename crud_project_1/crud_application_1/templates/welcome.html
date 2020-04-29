@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+  </head>
+  <body>
+    <header>
+  		<div class="main">
+  			<ul>
+          <li><a href="{% url 'welcome' %}">Home</a></li>
+  				<li><a href="{% url 'show' %}">show</a></li>
+  				<li><a href="{% url 'update' %}">update</a></li>
+  				<li><a href="{% url 'delete' %}">delete</a></li>
+
+  			</ul>
+  		</div>
+  	</header>
+  </body>

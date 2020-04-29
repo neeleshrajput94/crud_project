@@ -1,0 +1,60 @@
+<!<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title> index </title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static '/style.css' %}"/>
+</head>
+<body>
+  <form method="POST" class="post-from" action="/std">
+    {%  csrf_token %}
+    <div class="container">
+      <br>
+      <div class="from-group row">
+        <label class="col-sm-1 col-form-label"></label>
+        <div class="col-sm-4">
+          <h3> enter details</h3>
+        </div>
+      </div>
+        <div class="form-group row">
+        <lebel class="col-sm-2 cal-from-label"> student id:</label>
+        <div class="coll-sm-4">
+          {{ form.sid }}
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label"> student name:</label>
+      <div class="col-sm-4">
+          {{ form.sname }}
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label"> student age:</label>
+      <div class="col-sm-4">
+          {{ form.sage }}
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label"> student department:</label>
+      <div class="col-sm-4">
+          {{ form.sdepartment }}
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label"> student subject:</label>
+      <div class="col-sm-4">
+          {{ form.ssubject }}
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-1 col-form-label"></label>
+      <div class="col-sm-4">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+      </br>
+    </div>
+</body>
+
+</html>
