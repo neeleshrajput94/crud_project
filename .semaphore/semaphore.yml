@@ -8,6 +8,6 @@ blocks:
   - name: Build
     task:
       jobs:
-        - name: Biild
+        - name: Build
           commands:
             - checkout
