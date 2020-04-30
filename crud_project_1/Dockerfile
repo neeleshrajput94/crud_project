@@ -1,25 +1,43 @@
-# Dockerfile
+From ubuntu:16.04
 
-FROM python:3.7-buster
 
-# install nginx
-RUN apt-get update && apt-get install nginx vim -y --no-install-recommends
-COPY nginx.default /etc/nginx/sites-available/default
-RUN ln -sf /dev/stdout /var/log/nginx/access.log \
-    && ln -sf /dev/stderr /var/log/nginx/error.log
 
-# copy source and install dependencies
-RUN mkdir -p /opt/app
-RUN mkdir -p /opt/app/pip_cache
-RUN mkdir -p /opt/app/crud_project_1
-COPY requirements.txt start-server.sh /opt/app/
-COPY .pip_cache /opt/app/pip_cache/
-COPY crud_project_1 /opt/app/crud_project_1/
-WORKDIR /opt/app
-RUN pip install -r requirements.txt --cache-dir /opt/app/pip_cache
-RUN chown -R www-data:www-data /opt/app
+ENV DEBIAN_FRONTEND noninteractive
 
-# start server
+RUN apt-get update && apt-get install -y \
+    git \
+    vim \
+    python3 \
+    python3-pip \
+    nginx \
+    supervisor \
+    mysql-server \
+    mysql-client \
+    libmysqld-dev \
+    pwgen && rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install uwsgi django
+
+# nginx config
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+COPY nginx-site.conf /etc/nginx/sites-available/default
+
+# supervisor config
+COPY supervisor.conf /etc/supervisor/conf.d/
+
+# mysql config
+COPY my.cnf /etc/mysql/
+
+# uWSGI config
+COPY uwsgi.ini /home/django/
+COPY uwsgi_params /home/django/
+
+# Model_example content
+COPY admin.py /home/django/
+COPY models.py /home/django/
+
+# Copy initialization scripts
+COPY start.sh /home/django/
+
 EXPOSE 80
-STOPSIGNAL SIGTERM
-CMD ["/opt/app/start-server.sh"]
+CMD ["/bin/bash", "/home/django/start.sh"]
